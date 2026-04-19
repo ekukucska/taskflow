@@ -2,7 +2,7 @@
 
 import type { Task } from "@/types";
 import Avatar from "@/components/ui/Avatar";
-import { format } from "date-fns";
+import { format, parseISO, isBefore, startOfToday } from "date-fns";
 
 interface Props {
   task: Task;
@@ -10,9 +10,14 @@ interface Props {
   onClick: () => void;
 }
 
+function toLocalDate(dueDate: string | Date): Date {
+  const iso = dueDate instanceof Date ? dueDate.toISOString() : dueDate;
+  return parseISO(iso.substring(0, 10));
+}
+
 export default function KanbanCard({ task, isDragging, onClick }: Props) {
   const overdue =
-    task.dueDate && new Date(task.dueDate) < new Date() && task.status !== "DONE";
+    task.dueDate && task.status !== "DONE" && isBefore(toLocalDate(task.dueDate as string | Date), startOfToday());
 
   return (
     <div
@@ -46,7 +51,7 @@ export default function KanbanCard({ task, isDragging, onClick }: Props) {
         <div className="flex items-center gap-2">
           {task.dueDate && (
             <span className={`text-xs ${overdue ? "text-red-500 font-medium" : "text-gray-600"}`}>
-              {format(new Date(task.dueDate), "MMM d")}
+              {format(toLocalDate(task.dueDate as string | Date), "MMM d")}
             </span>
           )}
           {(task._count?.comments ?? 0) > 0 && (
