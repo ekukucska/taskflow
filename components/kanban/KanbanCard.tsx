@@ -45,13 +45,14 @@ export default function KanbanCard({ task, isDragging, onClick }: Props) {
       <div className="flex items-center justify-between mt-2">
         <div className="flex items-center gap-2">
           {task.dueDate && (
-            <span className={`text-xs ${overdue ? "text-red-500 font-medium" : "text-gray-400"}`}>
+            <span className={`text-xs ${overdue ? "text-red-500 font-medium" : "text-gray-600"}`}>
               {format(new Date(task.dueDate), "MMM d")}
             </span>
           )}
           {(task._count?.comments ?? 0) > 0 && (
-            <span className="text-xs text-gray-400 flex items-center gap-0.5">
-              💬 {task._count!.comments}
+            <span className="text-xs text-gray-600 flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 inline-block" />
+              {task._count!.comments}
             </span>
           )}
         </div>
