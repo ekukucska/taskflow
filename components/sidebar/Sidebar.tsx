@@ -82,8 +82,7 @@ export default function Sidebar() {
                 }`}
               >
                 <span
-                  className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: project.color }}
+                  className="w-2.5 h-2.5 rounded-full flex-shrink-0 bg-blue-500"
                 />
                 {!collapsed && (
                   <>
