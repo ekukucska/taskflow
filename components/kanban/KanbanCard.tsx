@@ -1,7 +1,6 @@
 "use client";
 
 import type { Task } from "@/types";
-import { PRIORITY_DOT_COLORS, PRIORITY_LABELS } from "@/lib/utils";
 import Avatar from "@/components/ui/Avatar";
 import { format } from "date-fns";
 
@@ -24,14 +23,8 @@ export default function KanbanCard({ task, isDragging, onClick }: Props) {
           : "shadow-sm border-gray-200 hover:shadow-lg hover:border-gray-300 hover:-translate-y-0.5"
       }`}
     >
-      {/* Priority dot + title */}
-      <div className="flex items-start gap-2 mb-2">
-        <span
-          className={`w-2 h-2 rounded-full flex-shrink-0 mt-1.5 ${PRIORITY_DOT_COLORS[task.priority]}`}
-          title={PRIORITY_LABELS[task.priority]}
-        />
-        <p className="text-sm font-medium text-gray-800 leading-snug line-clamp-2">{task.title}</p>
-      </div>
+      {/* Title */}
+      <p className="text-sm font-medium text-gray-800 leading-snug line-clamp-2 mb-2">{task.title}</p>
 
       {/* Tags */}
       {task.tags?.length > 0 && (
