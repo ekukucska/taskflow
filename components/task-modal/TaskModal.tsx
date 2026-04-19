@@ -162,11 +162,11 @@ export default function TaskModal({
             {/* Title */}
             <div>
               <label className="block text-xs font-medium text-gray-500 mb-1">
-                Title <span className="text-red-400">*</span>
+                Title
               </label>
               <input
                 className={`w-full text-lg font-semibold text-gray-900 placeholder-gray-300 border-b-2 outline-none focus:ring-0 pb-1 bg-transparent transition-colors ${
-                  title.trim() ? "border-gray-200 focus:border-indigo-400" : "border-red-300 focus:border-red-400"
+                  !title.trim() ? "border-red-300 focus:border-red-400" : "border-gray-200 focus:border-indigo-400"
                 }`}
                 placeholder="What needs to be done?"
                 value={title}
@@ -174,7 +174,7 @@ export default function TaskModal({
                 autoFocus
               />
               {!title.trim() && (
-                <p className="text-xs text-red-400 mt-1">Title is required to create a task.</p>
+                <p className="text-xs text-red-400 mt-1">Title is required.</p>
               )}
             </div>
 
