@@ -57,7 +57,7 @@ async function main() {
     data: {
       name: "Mobile App",
       description: "Cross-platform mobile application for iOS and Android",
-      color: "#8b5cf6",
+      color: "#1976d2",
       ownerId: bob.id,
     },
   });

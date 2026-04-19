@@ -91,7 +91,7 @@ export default function KanbanBoard({ project, initialTasks, users, tags }: Prop
         </div>
         <button
           onClick={() => { setNewTaskStatus("BACKLOG"); setShowNewTask(true); }}
-          className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
         >
           <span className="text-lg leading-none">+</span> New Task
         </button>

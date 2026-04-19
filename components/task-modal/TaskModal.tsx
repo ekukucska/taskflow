@@ -166,7 +166,7 @@ export default function TaskModal({
               </label>
               <input
                 className={`w-full text-lg font-semibold text-gray-900 placeholder-gray-300 border-b-2 outline-none focus:ring-0 pb-1 bg-transparent transition-colors ${
-                  !title.trim() ? "border-red-300 focus:border-red-400" : "border-gray-200 focus:border-indigo-400"
+                  !title.trim() ? "border-red-300 focus:border-red-400" : "border-gray-200 focus:border-blue-400"
                 }`}
                 placeholder="What needs to be done?"
                 value={title}
@@ -185,7 +185,7 @@ export default function TaskModal({
                 <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   {STATUSES.map((s) => (
                     <option key={s} value={s}>{STATUS_LABELS[s]}</option>
@@ -197,7 +197,7 @@ export default function TaskModal({
                 <select
                   value={priority}
                   onChange={(e) => setPriority(e.target.value)}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   {PRIORITIES.map((p) => (
                     <option key={p} value={p}>{PRIORITY_LABELS[p]}</option>
@@ -209,7 +209,7 @@ export default function TaskModal({
                 <select
                   value={assigneeId}
                   onChange={(e) => setAssigneeId(e.target.value)}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="">Unassigned</option>
                   {users.map((u) => (
@@ -223,7 +223,7 @@ export default function TaskModal({
                   type="date"
                   value={dueDate}
                   onChange={(e) => setDueDate(e.target.value)}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
             </div>
@@ -260,7 +260,7 @@ export default function TaskModal({
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Add a description..."
                 rows={4}
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-700 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-700 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
               />
             </div>
 
@@ -274,7 +274,7 @@ export default function TaskModal({
                   {task?.comments?.map((c) => (
                     <div key={c.id} className="flex gap-3">
                       <img
-                        src={c.author.avatarUrl ?? `https://ui-avatars.com/api/?name=${encodeURIComponent(c.author.name)}&background=6366f1&color=fff`}
+                        src={c.author.avatarUrl ?? `https://ui-avatars.com/api/?name=${encodeURIComponent(c.author.name)}&background=1976d2&color=fff`}
                         alt={c.author.name}
                         className="w-7 h-7 rounded-full flex-shrink-0 mt-0.5"
                       />
@@ -294,7 +294,7 @@ export default function TaskModal({
                   <select
                     value={commentAuthorId}
                     onChange={(e) => setCommentAuthorId(e.target.value)}
-                    className="border border-gray-200 rounded-lg px-2 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="border border-gray-200 rounded-lg px-2 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     {users.map((u) => (
                       <option key={u.id} value={u.id}>{u.name}</option>
@@ -305,11 +305,11 @@ export default function TaskModal({
                     onChange={(e) => setNewComment(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleAddComment()}
                     placeholder="Add a comment..."
-                    className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <button
                     onClick={handleAddComment}
-                    className="px-3 py-2 bg-indigo-600 text-white rounded-lg text-sm hover:bg-indigo-700 transition-colors"
+                    className="px-3 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition-colors"
                   >
                     Post
                   </button>
@@ -341,7 +341,7 @@ export default function TaskModal({
             <button
               onClick={handleSave}
               disabled={saving || !title.trim()}
-              className="px-4 py-2 text-sm bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition-colors"
+              className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
             >
               {saving ? "Saving..." : isNew ? "Create Task" : "Save Changes"}
             </button>
