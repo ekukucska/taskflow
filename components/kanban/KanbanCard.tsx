@@ -18,10 +18,10 @@ export default function KanbanCard({ task, isDragging, onClick }: Props) {
   return (
     <div
       onClick={onClick}
-      className={`bg-white rounded-lg p-3 cursor-pointer border transition-all ${
+      className={`bg-white rounded-lg p-3 cursor-pointer border transition-all duration-150 ${
         isDragging
-          ? "shadow-xl border-blue-200 rotate-1"
-          : "shadow-sm border-gray-100 hover:shadow-md hover:border-gray-200"
+          ? "shadow-xl border-blue-300 rotate-1 scale-[1.02]"
+          : "shadow-sm border-gray-200 hover:shadow-lg hover:border-gray-300 hover:-translate-y-0.5"
       }`}
     >
       {/* Priority dot + title */}
