@@ -89,7 +89,7 @@ export default function ListView({ project, initialTasks, users, tags }: Props) 
 
   const SortIcon = ({ field }: { field: SortField }) => {
     if (sortField !== field) return <span className="text-gray-300 ml-1">↕</span>;
-    return <span className="text-indigo-500 ml-1">{sortDir === "asc" ? "↑" : "↓"}</span>;
+    return <span className="text-blue-500 ml-1">{sortDir === "asc" ? "↑" : "↓"}</span>;
   };
 
   return (
@@ -105,7 +105,7 @@ export default function ListView({ project, initialTasks, users, tags }: Props) 
         </div>
         <button
           onClick={() => setShowNewTask(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
         >
           <span className="text-lg leading-none">+</span> New Task
         </button>
@@ -116,7 +116,7 @@ export default function ListView({ project, initialTasks, users, tags }: Props) 
         <select
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
-          className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">All Statuses</option>
           {Object.entries(STATUS_LABELS).map(([v, l]) => (
@@ -126,7 +126,7 @@ export default function ListView({ project, initialTasks, users, tags }: Props) 
         <select
           value={filterPriority}
           onChange={(e) => setFilterPriority(e.target.value)}
-          className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">All Priorities</option>
           {Object.entries(PRIORITY_LABELS).map(([v, l]) => (
@@ -136,7 +136,7 @@ export default function ListView({ project, initialTasks, users, tags }: Props) 
         <select
           value={filterAssignee}
           onChange={(e) => setFilterAssignee(e.target.value)}
-          className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">All Assignees</option>
           {users.map((u) => (

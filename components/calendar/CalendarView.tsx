@@ -94,7 +94,7 @@ export default function CalendarView({ project, initialTasks, users, tags }: Pro
           </button>
           <button
             onClick={() => { setNewTaskDate(""); setShowNewTask(true); }}
-            className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors"
           >
             <span className="text-lg leading-none">+</span> New Task
           </button>
@@ -128,7 +128,7 @@ export default function CalendarView({ project, initialTasks, users, tags }: Pro
                   <span
                     className={`text-xs font-semibold w-6 h-6 flex items-center justify-center rounded-full ${
                       today
-                        ? "bg-indigo-600 text-white"
+                        ? "bg-blue-600 text-white"
                         : "text-gray-500"
                     }`}
                   >
