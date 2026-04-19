@@ -6,7 +6,12 @@ import { STATUS_LABELS, PRIORITY_LABELS, STATUS_COLORS, PRIORITY_COLORS } from "
 import Avatar from "@/components/ui/Avatar";
 import TaskModal from "@/components/task-modal/TaskModal";
 import ViewTabs from "@/components/ui/ViewTabs";
-import { format } from "date-fns";
+import { format, parseISO, isBefore, startOfToday } from "date-fns";
+
+function toLocalDate(dueDate: string | Date): Date {
+  const iso = dueDate instanceof Date ? dueDate.toISOString() : dueDate;
+  return parseISO(iso.substring(0, 10));
+}
 
 type SortField = "title" | "status" | "priority" | "dueDate" | "assignee" | "createdAt";
 type SortDir = "asc" | "desc";
@@ -186,7 +191,7 @@ export default function ListView({ project, initialTasks, users, tags }: Props) 
           <tbody className="divide-y divide-gray-100 bg-white">
             {sorted.map((task) => {
               const overdue =
-                task.dueDate && new Date(task.dueDate) < new Date() && task.status !== "DONE";
+                task.dueDate && task.status !== "DONE" && isBefore(toLocalDate(task.dueDate as string | Date), startOfToday());
               return (
                 <tr
                   key={task.id}
@@ -232,7 +237,7 @@ export default function ListView({ project, initialTasks, users, tags }: Props) 
                   <td className="px-4 py-3">
                     {task.dueDate ? (
                       <span className={`text-xs ${overdue ? "text-red-500 font-medium" : "text-gray-500"}`}>
-                        {format(new Date(task.dueDate), "MMM d, yyyy")}
+                        {format(toLocalDate(task.dueDate as string | Date), "MMM d, yyyy")}
                       </span>
                     ) : (
                       <span className="text-gray-300 text-xs">—</span>

@@ -13,9 +13,11 @@ import {
   addMonths,
   subMonths,
   isToday,
+  isBefore,
+  startOfToday,
+  parseISO,
 } from "date-fns";
 import type { Task, Project, User, Tag } from "@/types";
-import { PRIORITY_DOT_COLORS } from "@/lib/utils";
 import TaskModal from "@/components/task-modal/TaskModal";
 import ViewTabs from "@/components/ui/ViewTabs";
 
@@ -41,8 +43,13 @@ export default function CalendarView({ project, initialTasks, users, tags }: Pro
 
   const tasksWithDue = tasks.filter((t) => t.dueDate);
 
+  function toLocalDate(dueDate: string | Date): Date {
+    const iso = dueDate instanceof Date ? dueDate.toISOString() : dueDate;
+    return parseISO(iso.substring(0, 10));
+  }
+
   function getTasksForDay(day: Date) {
-    return tasksWithDue.filter((t) => isSameDay(new Date(t.dueDate!), day));
+    return tasksWithDue.filter((t) => isSameDay(toLocalDate(t.dueDate as string | Date), day));
   }
 
   function handleTaskSaved(saved: Task) {
@@ -156,7 +163,7 @@ export default function CalendarView({ project, initialTasks, users, tags }: Pro
                       onClick={() => setSelectedTaskId(task.id)}
                       className="flex items-center gap-1 px-1.5 py-1 rounded cursor-pointer hover:bg-gray-50 transition-colors"
                     >
-                      <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${PRIORITY_DOT_COLORS[task.priority]}`} />
+                      <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${task.status !== 'DONE' && isBefore(toLocalDate(task.dueDate as string | Date), startOfToday()) ? 'bg-red-500' : 'bg-blue-500'}`} />
                       <span className="text-xs text-gray-700 truncate">{task.title}</span>
                     </div>
                   ))}
