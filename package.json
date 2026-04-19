@@ -1,5 +1,5 @@
 {
-  "name": "taskflow-temp",
+  "name": "taskflow",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,17 +8,26 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
+    "@prisma/client": "^6.19.3",
+    "date-fns": "^4.1.0",
+    "next": "14.2.35",
+    "prisma": "^6.19.3",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.35"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "dotenv": "^17.4.2",
     "postcss": "^8",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5"
   }
 }

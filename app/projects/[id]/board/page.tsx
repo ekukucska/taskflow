@@ -1,0 +1,33 @@
+import { prisma } from "@/lib/prisma";
+import { notFound } from "next/navigation";
+import KanbanBoard from "@/components/kanban/KanbanBoard";
+
+export default async function BoardPage({ params }: { params: { id: string } }) {
+  const project = await prisma.project.findUnique({
+    where: { id: params.id },
+    include: {
+      tasks: {
+        include: {
+          assignee: true,
+          tags: { include: { tag: true } },
+          _count: { select: { comments: true } },
+        },
+        orderBy: [{ status: "asc" }, { position: "asc" }],
+      },
+    },
+  });
+
+  if (!project) notFound();
+
+  const users = await prisma.user.findMany({ orderBy: { name: "asc" } });
+  const tags = await prisma.tag.findMany({ orderBy: { name: "asc" } });
+
+  return (
+    <KanbanBoard
+      project={project as any}
+      initialTasks={project.tasks as any}
+      users={users as any}
+      tags={tags as any}
+    />
+  );
+}
