@@ -12,7 +12,7 @@ const COLUMNS: Status[] = ["BACKLOG", "TODO", "IN_PROGRESS", "HOLD", "DONE"];
 
 const COLUMN_STYLES: Record<Status, { header: string; dot: string; bg: string }> = {
   BACKLOG: { header: "text-slate-600", dot: "bg-slate-400", bg: "bg-slate-50" },
-  TODO: { header: "text-gray-600", dot: "bg-gray-400", bg: "bg-gray-50" },
+  TODO: { header: "text-purple-600", dot: "bg-purple-500", bg: "bg-purple-50" },
   IN_PROGRESS: { header: "text-blue-600", dot: "bg-blue-500", bg: "bg-blue-50" },
   HOLD: { header: "text-yellow-600", dot: "bg-yellow-500", bg: "bg-yellow-50" },
   DONE: { header: "text-green-600", dot: "bg-green-500", bg: "bg-green-50" },
