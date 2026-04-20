@@ -16,7 +16,7 @@ async function main() {
     data: {
       name: "Alice Johnson",
       email: "alice@taskflow.dev",
-      avatarUrl: "https://ui-avatars.com/api/?name=Alice+Johnson&background=6366f1&color=fff",
+      avatarUrl: "https://ui-avatars.com/api/?name=Alice+Johnson&background=e0e7ff&color=3730a3",
     },
   });
 
@@ -24,7 +24,7 @@ async function main() {
     data: {
       name: "Bob Martinez",
       email: "bob@taskflow.dev",
-      avatarUrl: "https://ui-avatars.com/api/?name=Bob+Martinez&background=8b5cf6&color=fff",
+      avatarUrl: "https://ui-avatars.com/api/?name=Bob+Martinez&background=ede9fe&color=4c1d95",
     },
   });
 
@@ -32,7 +32,7 @@ async function main() {
     data: {
       name: "Carol Popa",
       email: "carol@taskflow.dev",
-      avatarUrl: "https://ui-avatars.com/api/?name=Carol+Popa&background=ec4899&color=fff",
+      avatarUrl: "https://ui-avatars.com/api/?name=Carol+Popa&background=fce7f3&color=831843",
     },
   });
 

@@ -3,25 +3,25 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const TAGS = [
-  { name: "feature",       color: "#3b82f6" },
-  { name: "bug",           color: "#ef4444" },
-  { name: "chore",         color: "#6b7280" },
-  { name: "design",        color: "#a855f7" },
-  { name: "documentation", color: "#14b8a6" },
-  { name: "wip",           color: "#f59e0b" },
-  { name: "qa",            color: "#06b6d4" },
-  { name: "frontend",      color: "#6366f1" },
-  { name: "backend",       color: "#f97316" },
-  { name: "devops",        color: "#22c55e" },
-  { name: "security",      color: "#7c3aed" },
-  { name: "mobile",        color: "#0ea5e9" },
+  { name: "feature",       color: "#bfdbfe" },
+  { name: "bug",           color: "#fecaca" },
+  { name: "chore",         color: "#e5e7eb" },
+  { name: "design",        color: "#e9d5ff" },
+  { name: "documentation", color: "#99f6e4" },
+  { name: "wip",           color: "#fef08a" },
+  { name: "qa",            color: "#a5f3fc" },
+  { name: "frontend",      color: "#c7d2fe" },
+  { name: "backend",       color: "#fed7aa" },
+  { name: "devops",        color: "#bbf7d0" },
+  { name: "security",      color: "#ddd6fe" },
+  { name: "mobile",        color: "#bae6fd" },
 ];
 
 async function main() {
   for (const tag of TAGS) {
     await prisma.tag.upsert({
       where:  { name: tag.name },
-      update: {},
+      update: { color: tag.color },
       create: tag,
     });
   }
