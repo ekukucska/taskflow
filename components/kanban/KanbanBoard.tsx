@@ -50,6 +50,7 @@ export default function KanbanBoard({ project, initialTasks, users, tags }: Prop
     const updatedPositions = colTasks.map((t, i) => ({ id: t.id, position: i + 1 }));
 
     // Optimistic update
+    const prevTasks = tasks;
     setTasks((prev) =>
       prev.map((t) => {
         const up = updatedPositions.find((u) => u.id === t.id);
@@ -59,11 +60,18 @@ export default function KanbanBoard({ project, initialTasks, users, tags }: Prop
     );
 
     // Persist moved task
-    await fetch(`/api/tasks/${draggableId}`, {
+    const res = await fetch(`/api/tasks/${draggableId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: newStatus, position: destination.index + 1 }),
+      body: JSON.stringify({ status: newStatus, position: destination.index + 1, version: moved.version }),
     });
+
+    if (!res.ok) {
+      setTasks(prevTasks);
+    } else {
+      const saved: Task = await res.json();
+      setTasks((prev) => prev.map((t) => (t.id === saved.id ? { ...t, version: saved.version } : t)));
+    }
   }
 
   function handleTaskSaved(saved: Task) {
