@@ -42,6 +42,14 @@ async function main() {
   const tagDesign = await prisma.tag.create({ data: { name: "design", color: "#a855f7" } });
   const tagBackend = await prisma.tag.create({ data: { name: "backend", color: "#f97316" } });
   const tagUrgent = await prisma.tag.create({ data: { name: "urgent", color: "#dc2626" } });
+  await prisma.tag.create({ data: { name: "chore", color: "#6b7280" } });
+  await prisma.tag.create({ data: { name: "documentation", color: "#14b8a6" } });
+  await prisma.tag.create({ data: { name: "wip", color: "#f59e0b" } });
+  await prisma.tag.create({ data: { name: "qa", color: "#06b6d4" } });
+  await prisma.tag.create({ data: { name: "frontend", color: "#6366f1" } });
+  await prisma.tag.create({ data: { name: "devops", color: "#22c55e" } });
+  await prisma.tag.create({ data: { name: "security", color: "#7c3aed" } });
+  await prisma.tag.create({ data: { name: "mobile", color: "#0ea5e9" } });
 
   // Create projects
   const projectWebsite = await prisma.project.create({
@@ -340,7 +348,7 @@ async function main() {
   console.log(`   Users: 3 (Alice, Bob, Carol)`);
   console.log(`   Projects: 2 (Website Redesign, Mobile App)`);
   console.log(`   Tasks: ${websiteTasks.length + mobileAppTasks.length}`);
-  console.log(`   Tags: 5`);
+  console.log(`   Tags: 13`);
   console.log(`   Comments: 6`);
 }
 
