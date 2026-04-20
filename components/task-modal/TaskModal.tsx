@@ -19,7 +19,7 @@ interface TaskModalProps {
 
 const STATUSES = ["BACKLOG", "TODO", "IN_PROGRESS", "HOLD", "DONE"] as const;
 const PRIORITIES = ["LOW", "MEDIUM", "HIGH", "URGENT"] as const;
-type SaveStatus = "idle" | "saving" | "saved" | "error";
+type SaveStatus = "idle" | "saving" | "saved" | "error" | "conflict";
 
 export default function TaskModal({
   taskId,
@@ -36,6 +36,7 @@ export default function TaskModal({
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
+  const [version, setVersion] = useState(0);
   const [newComment, setNewComment] = useState("");
   const [commentAuthorId, setCommentAuthorId] = useState(users[0]?.id ?? "");
   const [tagPopoverOpen, setTagPopoverOpen] = useState(false);
@@ -55,22 +56,29 @@ export default function TaskModal({
     initialData?.tags?.map((t) => t.tagId) ?? []
   );
 
+  async function reloadTask() {
+    if (!taskId) return;
+    setLoading(true);
+    try {
+      const data: Task = await fetch(`/api/tasks/${taskId}`).then((r) => r.json());
+      setTask(data);
+      setTitle(data.title);
+      setDescription(data.description ?? "");
+      setStatus(data.status);
+      setPriority(data.priority);
+      setAssigneeId(data.assigneeId ?? "");
+      setDueDate(data.dueDate ? data.dueDate.split("T")[0] : "");
+      setSelectedTags(data.tags?.map((t) => t.tagId) ?? []);
+      setVersion(data.version);
+      setSaveStatus("idle");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     if (!isNew && taskId) {
-      fetch(`/api/tasks/${taskId}`)
-        .then((r) => r.json())
-        .then((data: Task) => {
-          setTask(data);
-          setTitle(data.title);
-          setDescription(data.description ?? "");
-          setStatus(data.status);
-          setPriority(data.priority);
-          setAssigneeId(data.assigneeId ?? "");
-          setDueDate(data.dueDate ? data.dueDate.split("T")[0] : "");
-          setSelectedTags(data.tags?.map((t) => t.tagId) ?? []);
-          setLoading(false);
-        })
-        .catch(() => setLoading(false));
+      reloadTask();
     }
   }, [taskId, isNew]);
 
@@ -100,6 +108,7 @@ export default function TaskModal({
         assigneeId: assigneeId || null,
         dueDate: dueDate || null,
         tagIds: selectedTags,
+        version,
         ...overrides,
       };
       const res = await fetch(`/api/tasks/${taskId}`, {
@@ -110,8 +119,11 @@ export default function TaskModal({
       if (res.ok) {
         const saved = await res.json();
         setTask((prev) => (prev ? { ...prev, ...saved } : saved));
+        setVersion(saved.version);
         setSaveStatus("saved");
         setTimeout(() => setSaveStatus("idle"), 2000);
+      } else if (res.status === 409) {
+        setSaveStatus("conflict");
       } else {
         setSaveStatus("error");
       }
@@ -133,6 +145,7 @@ export default function TaskModal({
         dueDate: dueDate || null,
         tagIds: selectedTags,
         projectId,
+        ...(!isNew && { version }),
       };
       const res = await fetch(isNew ? "/api/tasks" : `/api/tasks/${taskId}`, {
         method: isNew ? "POST" : "PUT",
@@ -143,6 +156,8 @@ export default function TaskModal({
         const saved = await res.json();
         onSaved(saved);
         onClose();
+      } else if (res.status === 409) {
+        setSaveStatus("conflict");
       }
     } finally {
       setSaving(false);
@@ -205,20 +220,34 @@ export default function TaskModal({
               {isNew ? "New Task" : "Task Details"}
             </h2>
             {!isNew && saveStatus !== "idle" && (
-              <span
-                className={`text-xs transition-opacity ${
-                  saveStatus === "saving"
-                    ? "text-gray-400"
+              <span className="flex items-center gap-2">
+                <span
+                  className={`text-xs transition-opacity ${
+                    saveStatus === "saving"
+                      ? "text-gray-400"
+                      : saveStatus === "saved"
+                      ? "text-green-500"
+                      : saveStatus === "conflict"
+                      ? "text-orange-500"
+                      : "text-red-400"
+                  }`}
+                >
+                  {saveStatus === "saving"
+                    ? "Saving…"
                     : saveStatus === "saved"
-                    ? "text-green-500"
-                    : "text-red-400"
-                }`}
-              >
-                {saveStatus === "saving"
-                  ? "Saving…"
-                  : saveStatus === "saved"
-                  ? "✓ Saved"
-                  : "Error saving"}
+                    ? "✓ Saved"
+                    : saveStatus === "conflict"
+                    ? "Conflict — task was modified elsewhere"
+                    : "Error saving"}
+                </span>
+                {saveStatus === "conflict" && (
+                  <button
+                    onClick={reloadTask}
+                    className="text-xs text-blue-500 underline hover:text-blue-700"
+                  >
+                    Reload
+                  </button>
+                )}
               </span>
             )}
           </div>

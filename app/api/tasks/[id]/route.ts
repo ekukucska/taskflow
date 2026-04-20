@@ -29,37 +29,57 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const body = await req.json();
-    const { title, description, status, priority, assigneeId, dueDate, position, tagIds } = body;
+    const { title, description, status, priority, assigneeId, dueDate, position, tagIds, version } = body;
 
-    const task = await prisma.task.update({
-      where: { id: params.id },
-      data: {
-        ...(title !== undefined && { title }),
-        ...(description !== undefined && { description }),
-        ...(status !== undefined && { status }),
-        ...(priority !== undefined && { priority }),
-        ...(assigneeId !== undefined && { assigneeId: assigneeId || null }),
-        ...(dueDate !== undefined && { dueDate: dueDate ? new Date(dueDate) : null }),
-        ...(position !== undefined && { position }),
-        ...(tagIds !== undefined && {
-          tags: {
-            deleteMany: {},
-            create: tagIds.map((tagId: string) => ({ tagId })),
-          },
-        }),
-      },
-      include: {
-        assignee: true,
-        project: true,
-        tags: { include: { tag: true } },
-        comments: {
-          include: { author: true },
-          orderBy: { createdAt: "asc" },
+    if (version === undefined) {
+      return NextResponse.json({ error: "version is required" }, { status: 400 });
+    }
+
+    const result = await prisma.$transaction(async (tx) => {
+      const { count } = await tx.task.updateMany({
+        where: { id: params.id, version },
+        data: {
+          ...(title !== undefined && { title }),
+          ...(description !== undefined && { description }),
+          ...(status !== undefined && { status }),
+          ...(priority !== undefined && { priority }),
+          ...(assigneeId !== undefined && { assigneeId: assigneeId || null }),
+          ...(dueDate !== undefined && { dueDate: dueDate ? new Date(dueDate) : null }),
+          ...(position !== undefined && { position }),
+          version: { increment: 1 },
         },
-      },
+      });
+
+      if (count === 0) return null;
+
+      if (tagIds !== undefined) {
+        await tx.taskTag.deleteMany({ where: { taskId: params.id } });
+        if (tagIds.length > 0) {
+          await tx.taskTag.createMany({
+            data: tagIds.map((tagId: string) => ({ taskId: params.id, tagId })),
+          });
+        }
+      }
+
+      return tx.task.findUnique({
+        where: { id: params.id },
+        include: {
+          assignee: true,
+          project: true,
+          tags: { include: { tag: true } },
+          comments: {
+            include: { author: true },
+            orderBy: { createdAt: "asc" },
+          },
+        },
+      });
     });
 
-    return NextResponse.json(task);
+    if (result === null) {
+      return NextResponse.json({ error: "CONCURRENCY_CONFLICT" }, { status: 409 });
+    }
+
+    return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json({ error: "Failed to update task" }, { status: 500 });
   }

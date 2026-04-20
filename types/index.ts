@@ -42,6 +42,7 @@ export interface Task {
   assignee: User | null;
   dueDate: string | null;
   createdAt: string;
+  version: number;
   tags: TaskTag[];
   comments?: Comment[];
   _count?: { comments: number };
