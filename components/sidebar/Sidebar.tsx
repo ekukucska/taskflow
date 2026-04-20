@@ -75,7 +75,7 @@ export default function Sidebar() {
               <Link
                 href={`/projects/${project.id}/board`}
                 title={collapsed ? project.name : undefined}
-                className={`flex items-center gap-3 px-3 py-2.5 text-sm font-medium transition-colors rounded-md mx-2 min-h-[44px] ${
+                className={`flex items-center gap-3 px-3 py-3 text-[15px] font-medium transition-colors rounded-md mx-2 min-h-[44px] ${
                   isActive
                     ? "bg-white/10 text-white"
                     : "text-white/60 hover:bg-white/5 hover:text-white/90"

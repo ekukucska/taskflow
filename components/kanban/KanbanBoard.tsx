@@ -109,7 +109,7 @@ export default function KanbanBoard({ project, initialTasks, users, tags }: Prop
                   {/* Column header */}
                   <div className="flex items-center gap-2 mb-3 px-1">
                     <span className={`w-2 h-2 rounded-full ${style.dot}`} />
-                    <span className={`text-sm font-semibold ${style.header}`}>
+                    <span className={`text-[15px] font-bold tracking-wide ${style.header}`}>
                       {STATUS_LABELS[status]}
                     </span>
                     <span className="ml-auto text-xs text-gray-400 bg-gray-100 rounded-full px-2 py-0.5">
