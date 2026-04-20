@@ -29,7 +29,7 @@ export default function KanbanCard({ task, isDragging, onClick }: Props) {
       }`}
     >
       {/* Title */}
-      <p className="text-sm font-medium text-gray-800 leading-snug line-clamp-2 mb-2">{task.title}</p>
+      <p className="text-[15px] font-medium text-gray-800 leading-snug line-clamp-2 mb-2">{task.title}</p>
 
       {/* Tags */}
       {task.tags?.length > 0 && (
@@ -37,7 +37,7 @@ export default function KanbanCard({ task, isDragging, onClick }: Props) {
           {task.tags.slice(0, 3).map(({ tag }) => (
             <span
               key={tag.id}
-              className="px-1.5 py-0.5 rounded text-xs font-medium text-gray-800"
+              className="px-1.5 py-0.5 rounded text-[12px] font-medium text-gray-800"
               style={{ backgroundColor: tag.color }}
             >
               {tag.name}
@@ -50,12 +50,12 @@ export default function KanbanCard({ task, isDragging, onClick }: Props) {
       <div className="flex items-center justify-between mt-2">
         <div className="flex items-center gap-2">
           {task.dueDate && (
-            <span className={`text-xs ${overdue ? "text-red-500 font-medium" : "text-gray-600"}`}>
+            <span className={`text-[12px] ${overdue ? "text-red-500 font-medium" : "text-gray-600"}`}>
               {format(toLocalDate(task.dueDate as string | Date), "MMM d")}
             </span>
           )}
           {(task._count?.comments ?? 0) > 0 && (
-            <span className="text-xs text-gray-600 flex items-center gap-1">
+            <span className="text-[12px] text-gray-600 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-500 inline-block" />
               {task._count!.comments}
             </span>

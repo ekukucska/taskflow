@@ -113,7 +113,7 @@ export default function CalendarView({ project, initialTasks, users, tags }: Pro
         {/* Day headers */}
         <div className="grid grid-cols-7 mb-1">
           {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((d) => (
-            <div key={d} className="text-center text-xs font-semibold text-gray-400 py-2">
+            <div key={d} className="text-center text-[13px] font-semibold text-slate-500 py-2">
               {d}
             </div>
           ))}
@@ -133,10 +133,10 @@ export default function CalendarView({ project, initialTasks, users, tags }: Pro
                 {/* Day number */}
                 <div className="flex items-center justify-between mb-1">
                   <span
-                    className={`text-xs font-semibold w-6 h-6 flex items-center justify-center rounded-full ${
+                    className={`text-[13px] font-semibold w-7 h-7 flex items-center justify-center rounded-full ${
                       today
                         ? "bg-blue-600 text-white"
-                        : "text-gray-500"
+                        : "text-gray-700"
                     }`}
                   >
                     {format(day, "d")}
@@ -157,18 +157,25 @@ export default function CalendarView({ project, initialTasks, users, tags }: Pro
 
                 {/* Tasks */}
                 <div className="space-y-0.5">
-                  {dayTasks.slice(0, 3).map((task) => (
-                    <div
-                      key={task.id}
-                      onClick={() => setSelectedTaskId(task.id)}
-                      className="flex items-center gap-1 px-1.5 py-1 rounded cursor-pointer hover:bg-gray-50 transition-colors"
-                    >
-                      <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${task.status !== 'DONE' && isBefore(toLocalDate(task.dueDate as string | Date), startOfToday()) ? 'bg-red-500' : 'bg-blue-500'}`} />
-                      <span className="text-xs text-gray-700 truncate">{task.title}</span>
-                    </div>
-                  ))}
+                  {dayTasks.slice(0, 3).map((task) => {
+                    const isOverdue = task.status !== "DONE" && isBefore(toLocalDate(task.dueDate as string | Date), startOfToday());
+                    return (
+                      <div
+                        key={task.id}
+                        onClick={() => setSelectedTaskId(task.id)}
+                        className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full cursor-pointer transition-colors truncate ${
+                          isOverdue
+                            ? "bg-red-50 hover:bg-red-100 border border-red-100"
+                            : "bg-blue-50 hover:bg-blue-100 border border-blue-100"
+                        }`}
+                      >
+                        <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${isOverdue ? "bg-red-500" : "bg-blue-500"}`} />
+                        <span className={`text-[13px] font-medium truncate ${isOverdue ? "text-red-700" : "text-blue-700"}`}>{task.title}</span>
+                      </div>
+                    );
+                  })}
                   {dayTasks.length > 3 && (
-                    <div className="text-xs text-gray-400 px-1.5">
+                    <div className="text-[12px] text-gray-400 px-1.5">
                       +{dayTasks.length - 3} more
                     </div>
                   )}

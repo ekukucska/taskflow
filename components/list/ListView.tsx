@@ -157,31 +157,31 @@ export default function ListView({ project, initialTasks, users, tags }: Props) 
           <thead className="bg-gray-50 sticky top-0 z-10">
             <tr>
               <th
-                className="text-left px-6 py-3 font-medium text-gray-500 cursor-pointer hover:text-gray-700 w-2/5"
+                className="text-left px-6 py-3 text-[13px] font-semibold text-slate-600 cursor-pointer hover:text-slate-800 w-2/5"
                 onClick={() => handleSort("title")}
               >
                 Title <SortIcon field="title" />
               </th>
               <th
-                className="text-left px-4 py-3 font-medium text-gray-500 cursor-pointer hover:text-gray-700"
+                className="text-left px-4 py-3 text-[13px] font-semibold text-slate-600 cursor-pointer hover:text-slate-800"
                 onClick={() => handleSort("status")}
               >
                 Status <SortIcon field="status" />
               </th>
               <th
-                className="text-left px-4 py-3 font-medium text-gray-500 cursor-pointer hover:text-gray-700"
+                className="text-left px-4 py-3 text-[13px] font-semibold text-slate-600 cursor-pointer hover:text-slate-800"
                 onClick={() => handleSort("priority")}
               >
                 Priority <SortIcon field="priority" />
               </th>
               <th
-                className="text-left px-4 py-3 font-medium text-gray-500 cursor-pointer hover:text-gray-700"
+                className="text-left px-4 py-3 text-[13px] font-semibold text-slate-600 cursor-pointer hover:text-slate-800"
                 onClick={() => handleSort("assignee")}
               >
                 Assignee <SortIcon field="assignee" />
               </th>
               <th
-                className="text-left px-4 py-3 font-medium text-gray-500 cursor-pointer hover:text-gray-700"
+                className="text-left px-4 py-3 text-[13px] font-semibold text-slate-600 cursor-pointer hover:text-slate-800"
                 onClick={() => handleSort("dueDate")}
               >
                 Due Date <SortIcon field="dueDate" />
@@ -198,14 +198,14 @@ export default function ListView({ project, initialTasks, users, tags }: Props) 
                   onClick={() => setSelectedTaskId(task.id)}
                   className="hover:bg-gray-50 cursor-pointer transition-colors"
                 >
-                  <td className="px-6 py-3">
+                  <td className="px-6 py-[14px]">
                     <div className="font-medium text-gray-800 truncate max-w-xs">{task.title}</div>
                     {task.tags?.length > 0 && (
                       <div className="flex gap-1 mt-1">
                         {task.tags.slice(0, 3).map(({ tag }) => (
                           <span
                             key={tag.id}
-                            className="px-1.5 py-0.5 rounded text-xs font-medium text-gray-800"
+                            className="px-1.5 py-0.5 rounded text-[12px] font-medium text-gray-800"
                             style={{ backgroundColor: tag.color }}
                           >
                             {tag.name}
@@ -214,33 +214,33 @@ export default function ListView({ project, initialTasks, users, tags }: Props) 
                       </div>
                     )}
                   </td>
-                  <td className="px-4 py-3">
-                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${STATUS_COLORS[task.status]}`}>
+                  <td className="px-4 py-[14px]">
+                    <span className={`inline-flex items-center px-2 py-0.5 rounded text-[12px] font-medium ${STATUS_COLORS[task.status]}`}>
                       {STATUS_LABELS[task.status]}
                     </span>
                   </td>
-                  <td className="px-4 py-3">
-                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${PRIORITY_COLORS[task.priority]}`}>
+                  <td className="px-4 py-[14px]">
+                    <span className={`inline-flex items-center px-2 py-0.5 rounded text-[12px] font-medium ${PRIORITY_COLORS[task.priority]}`}>
                       {PRIORITY_LABELS[task.priority]}
                     </span>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-[14px]">
                     {task.assignee ? (
                       <div className="flex items-center gap-2">
                         <Avatar user={task.assignee} size="sm" />
-                        <span className="text-gray-700 text-xs">{task.assignee.name}</span>
+                        <span className="text-gray-700 text-[13px]">{task.assignee.name}</span>
                       </div>
                     ) : (
-                      <span className="text-gray-300 text-xs">—</span>
+                      <span className="text-gray-300 text-[13px]">—</span>
                     )}
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-[14px]">
                     {task.dueDate ? (
-                      <span className={`text-xs ${overdue ? "text-red-500 font-medium" : "text-gray-500"}`}>
+                      <span className={`text-[13px] ${overdue ? "text-red-500 font-medium" : "text-gray-500"}`}>
                         {format(toLocalDate(task.dueDate as string | Date), "MMM d, yyyy")}
                       </span>
                     ) : (
-                      <span className="text-gray-300 text-xs">—</span>
+                      <span className="text-gray-300 text-[13px]">—</span>
                     )}
                   </td>
                 </tr>
