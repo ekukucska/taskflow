@@ -433,7 +433,7 @@ export default function TaskModal({
                     {activeTags.map((tag) => (
                       <span
                         key={tag.id}
-                        className="flex items-center gap-0.5 pl-2 pr-1 py-0.5 rounded-full text-xs font-medium text-white"
+                        className="flex items-center gap-0.5 pl-2 pr-1 py-0.5 rounded-full text-xs font-medium text-gray-800"
                         style={{ backgroundColor: tag.color }}
                       >
                         {tag.name}
